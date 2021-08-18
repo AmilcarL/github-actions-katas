@@ -23,4 +23,6 @@ jobs:
         with:
           name: code
           path: .
+      - name: Download
+        run: ci/build-app.sh
     needs: Clone-down
