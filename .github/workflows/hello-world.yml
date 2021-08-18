@@ -40,6 +40,8 @@ jobs:
           path: .
     needs: Clone-down
   Docker-image:
+    runs-on: ubuntu-latest
+    container: gradle:6-jdk11
     needs: 
       - Build
       - Test
@@ -49,7 +51,9 @@ jobs:
         with:
           name: code
           path: .
+      - run: ci/build-docker.sh && ci/push.docker.sh
+        with: export GIT_COMMIT="GA-$GITHUB_SHA"
+        
 env:
   docker_username: ${{ secrets.DOCKER_USERNAME }}
   docker_password: ${{ secrets.DOCKER_PASSWORD }}
-run: export GIT_COMMIT="GA-$GITHUB_SHA"
