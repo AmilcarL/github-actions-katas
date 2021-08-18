@@ -40,7 +40,9 @@ jobs:
           path: .
     needs: Clone-down
   Docker-image:
-    needs: [Build, Test]
+    needs: 
+      - Build
+      - Test
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v2
