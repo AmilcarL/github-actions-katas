@@ -33,4 +33,21 @@ jobs:
           path: .
       - name: Builddd
         run: chmod +x ci/build-app.sh && ci/build-app.sh
+      - name: Upload Repo
+        uses: actions/upload-artifact@v2
+        with:
+          name: code
+          path: .
     needs: Clone-down
+  Docker-image:
+    needs: [Build, Test]
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: code
+          path: .
+env:
+  docker_username: ${{ secrets.DOCKER_USERNAME }}
+  docker_password: ${{ secrets.DOCKER_PASSWORD }}
+run: export GIT_COMMIT="GA-$GITHUB_SHA"
